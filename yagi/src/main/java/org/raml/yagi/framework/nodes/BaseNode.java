@@ -94,8 +94,8 @@ public abstract class BaseNode implements Node
         if (getParent() != null)
             return getParent().getRootNode();
 
-        if (contextNode != null)
-            return contextNode.getRootNode();
+        // if (contextNode != null)
+        // return contextNode.getRootNode();
 
         return this;
     }
