@@ -100,6 +100,18 @@ public abstract class BaseNode implements Node
         return this;
     }
 
+    @Override
+    public Node getContextNode()
+    {
+        if (getParent() != null)
+            return getParent().getRootNode();
+
+        if (contextNode != null)
+            return contextNode.getRootNode();
+
+        return this;
+    }
+
     @Nonnull
     @Override
     public <T extends Node> List<T> findDescendantsWith(Class<T> nodeType)

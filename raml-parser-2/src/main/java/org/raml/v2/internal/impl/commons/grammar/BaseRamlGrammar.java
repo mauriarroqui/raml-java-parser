@@ -235,8 +235,8 @@ public abstract class BaseRamlGrammar extends BaseGrammar
                            .with(field(displayNameKey(), ramlScalarValue()))
                            .with(queryParametersField())
                            .with(headersField())
-                           .with(responsesField())
-                           .with(bodyField())
+                           .with(traitResponsesField())
+                           .with(traitBodyField())
                            .with(protocolsField().description("A method can override the protocols specified in the resource or at the API root, by employing this property."))
                            .with(isField().description("A list of the traits to apply to this method."))
                            .with(securedByField().description("The security schemes that apply to this method."))
@@ -337,7 +337,7 @@ public abstract class BaseRamlGrammar extends BaseGrammar
             @Override
             public ObjectRule call()
             {
-                return new RuleTraverser().traverse(methodValue(), ruleParameterModifier());
+                return new RuleTraverser().traverse(traitMethodValue(), ruleParameterModifier());
             }
         });
         return trait
@@ -407,6 +407,20 @@ public abstract class BaseRamlGrammar extends BaseGrammar
                            .with(securedByField().description("The security schemes that apply to this method."));
     }
 
+    protected ObjectRule traitMethodValue()
+    {
+        return objectType()
+                           .with(descriptionField())
+                           .with(displayNameField())
+                           .with(queryParametersField())
+                           .with(headersField())
+                           .with(traitResponsesField())
+                           .with(traitBodyField())
+                           .with(protocolsField().description("A method can override the protocols specified in the resource or at the API root, by employing this property."))
+                           .with(isField().description("A list of the traits to apply to this method."))
+                           .with(securedByField().description("The security schemes that apply to this method."));
+    }
+
     protected KeyValueRule queryParametersField()
     {
         return field(queryParametersKey(), parameters());
@@ -415,6 +429,11 @@ public abstract class BaseRamlGrammar extends BaseGrammar
     protected KeyValueRule responsesField()
     {
         return field(responseKey(), responses());
+    }
+
+    protected KeyValueRule traitResponsesField()
+    {
+        return field(responseKey(), traitResponses());
     }
 
     protected StringValueRule responseKey()
@@ -437,6 +456,10 @@ public abstract class BaseRamlGrammar extends BaseGrammar
                                                              "Mutually exclusive with queryString.");
     }
 
+    protected Rule traitResponses()
+    {
+        return objectType().with(traitResponseField());
+    }
 
     protected Rule responses()
     {
@@ -448,6 +471,11 @@ public abstract class BaseRamlGrammar extends BaseGrammar
         return field(responseCodes(), response());
     }
 
+    protected KeyValueRule traitResponseField()
+    {
+        return field(responseCodes(), traitResponse());
+    }
+
     protected ObjectRule response()
     {
         return objectType()
@@ -455,6 +483,15 @@ public abstract class BaseRamlGrammar extends BaseGrammar
                            .with(descriptionField())
                            .with(headersField())
                            .with(bodyField());
+    }
+
+    protected ObjectRule traitResponse()
+    {
+        return objectType()
+                           .with(displayNameField())
+                           .with(descriptionField())
+                           .with(headersField())
+                           .with(traitBodyField());
     }
 
     protected Rule body()
@@ -562,6 +599,18 @@ public abstract class BaseRamlGrammar extends BaseGrammar
                         whenPresent("/mediaType", mimeType())))
                                                                .then(BodyNode.class);
     }
+
+
+    protected KeyValueRule traitBodyField()
+    {
+        return field(bodyKey(),
+                anyOf(
+                        whenChildIs(mimeTypeField(), body()),
+                        whenPresent("/mediaType", mimeType()),
+                        mimeType()))
+                                                               .then(BodyNode.class);
+    }
+
 
     protected StringValueRule bodyKey()
     {

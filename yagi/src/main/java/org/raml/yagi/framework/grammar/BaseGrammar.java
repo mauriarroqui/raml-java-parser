@@ -18,33 +18,7 @@ package org.raml.yagi.framework.grammar;
 import com.google.common.collect.Range;
 import org.apache.commons.lang.math.IntRange;
 import org.apache.commons.lang.math.LongRange;
-import org.raml.yagi.framework.grammar.rule.AllOfRule;
-import org.raml.yagi.framework.grammar.rule.AnyOfRule;
-import org.raml.yagi.framework.grammar.rule.AnyValueRule;
-import org.raml.yagi.framework.grammar.rule.ArrayRule;
-import org.raml.yagi.framework.grammar.rule.BooleanTypeRule;
-import org.raml.yagi.framework.grammar.rule.ChildBasedConditionalRule;
-import org.raml.yagi.framework.grammar.rule.ConditionalRule;
-import org.raml.yagi.framework.grammar.rule.ConditionalRules;
-import org.raml.yagi.framework.grammar.rule.DefaultValue;
-import org.raml.yagi.framework.grammar.rule.ExclusiveKeys;
-import org.raml.yagi.framework.grammar.rule.FieldPresentRule;
-import org.raml.yagi.framework.grammar.rule.FirstOfRule;
-import org.raml.yagi.framework.grammar.rule.IntegerTypeRule;
-import org.raml.yagi.framework.grammar.rule.IntegerValueRule;
-import org.raml.yagi.framework.grammar.rule.KeyValueRule;
-import org.raml.yagi.framework.grammar.rule.MinLengthRule;
-import org.raml.yagi.framework.grammar.rule.NegativeRule;
-import org.raml.yagi.framework.grammar.rule.NullValueRule;
-import org.raml.yagi.framework.grammar.rule.NumberTypeRule;
-import org.raml.yagi.framework.grammar.rule.ObjectRule;
-import org.raml.yagi.framework.grammar.rule.ParentKeyDefaultValue;
-import org.raml.yagi.framework.grammar.rule.RangeValueRule;
-import org.raml.yagi.framework.grammar.rule.RegexValueRule;
-import org.raml.yagi.framework.grammar.rule.Rule;
-import org.raml.yagi.framework.grammar.rule.ScalarTypeRule;
-import org.raml.yagi.framework.grammar.rule.StringTypeRule;
-import org.raml.yagi.framework.grammar.rule.StringValueRule;
+import org.raml.yagi.framework.grammar.rule.*;
 
 import javax.annotation.Nullable;
 import java.math.BigInteger;
@@ -161,6 +135,12 @@ public class BaseGrammar
     {
         return new FieldPresentRule(selector, then);
     }
+
+    public FieldPresentInContextRule whenPresentInContext(String selector, Rule then)
+    {
+        return new FieldPresentInContextRule(selector, then);
+    }
+
 
     /**
      * Matches any value

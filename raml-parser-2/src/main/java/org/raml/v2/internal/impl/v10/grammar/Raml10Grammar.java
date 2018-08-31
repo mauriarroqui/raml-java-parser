@@ -656,7 +656,8 @@ public class Raml10Grammar extends BaseRamlGrammar
                            .with(field(scalarType(), exampleValue()).then(ExampleDeclarationNode.class));
     }
 
-    private KeyValueRule typeField(TypeId defaultType)
+    @Nonnull
+    protected KeyValueRule typeField(TypeId defaultType)
     {
         return field(
                 anyOf(typeKey(), schemaKey()),
@@ -876,6 +877,7 @@ public class Raml10Grammar extends BaseRamlGrammar
     {
         return resourceTypes();
     }
+
 
     protected Rule securitySchemesValue()
     {

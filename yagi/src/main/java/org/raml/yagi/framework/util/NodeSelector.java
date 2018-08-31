@@ -64,6 +64,20 @@ public class NodeSelector
     }
 
     @Nullable
+    public static Node selectFromContext(String path, Node from)
+    {
+        if (path.startsWith("/"))
+        {
+            return selectFrom(path.substring(1), from.getRootNode());
+        }
+        else
+        {
+            final String[] tokens = path.split("(?<!\\\\)/"); // matches a slash not preceded by a backslash
+            return selectFrom(Arrays.asList(tokens), from);
+        }
+    }
+
+    @Nullable
     public static Integer selectIntValue(String path, Node from)
     {
         Number longValue = selectType(path, from, null);

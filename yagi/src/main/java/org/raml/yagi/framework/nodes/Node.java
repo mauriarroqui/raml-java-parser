@@ -44,6 +44,8 @@ public interface Node
      */
     Node getRootNode();
 
+    Node getContextNode();
+
     /**
      * The parent of this node
      * @return The parent

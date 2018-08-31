@@ -1,0 +1,22 @@
+#%RAML 1.0
+title: ACME Banking API
+version: v1
+
+types: 
+    CustomErrorMessage:
+      type: object
+      properties:
+        statusCode: string
+        message: string
+
+uses:
+  Traits: libraries/TraitsLibrary.raml
+
+/customers:
+  get:
+    is:
+      - Traits.hasAcceptHeader:
+          CustomErrorDataType : CustomErrorMessage
+    responses: 
+      200:
+        body: ~
