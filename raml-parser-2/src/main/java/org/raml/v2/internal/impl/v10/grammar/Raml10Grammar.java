@@ -132,6 +132,15 @@ public class Raml10Grammar extends BaseRamlGrammar
     }
 
     @Override
+    protected ObjectRule traitMethodValue()
+    {
+        return super.traitMethodValue()
+                    .with(field(queryStringKey(), type()))
+                    .with(exclusiveKeys(QUERY_STRING_KEY_NAME, QUERY_PARAMETERS_KEY_NAME))
+                    .with(annotationField());
+    }
+
+    @Override
     public ObjectRule securityScheme()
     {
         return super.securityScheme().with(annotationField());

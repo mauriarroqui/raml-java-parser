@@ -608,7 +608,7 @@ public abstract class BaseRamlGrammar extends BaseGrammar
                         whenChildIs(mimeTypeField(), body()),
                         whenPresent("/mediaType", mimeType()),
                         mimeType()))
-                                                               .then(BodyNode.class);
+                                    .then(BodyNode.class);
     }
 
 
